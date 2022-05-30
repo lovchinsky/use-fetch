@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 export enum STATUS {
   Idle = 'idle',
@@ -14,39 +14,39 @@ enum ACTION_TYPE {
   Reset = 'reset',
 }
 
-export interface State<T = any> {
+export interface State<T> {
   status: STATUS;
-  data: T | null;
-  error: Error | null;
+  data?: T;
+  error?: any;
 }
 
-interface Action<T = any> {
+interface Action<T> {
   type: ACTION_TYPE;
   payload?: T;
   error?: any;
 }
 
-const initialState: State = {
+const initialState: State<any> = {
   status: STATUS.Idle,
   data: null,
   error: null,
 };
 
-const createRequestAction = (): Action => ({
+const createRequestAction = () => ({
   type: ACTION_TYPE.Request,
 });
 
-const createSuccessAction = <T>(data: T): Action => ({
+const createSuccessAction = <T>(data: T) => ({
   type: ACTION_TYPE.Request,
   payload: data,
 });
 
-const createFailureAction = (error: Error): Action => ({
+const createFailureAction = (error: any) => ({
   type: ACTION_TYPE.Failure,
   error,
 });
 
-const reducer = (state: State, action: Action): State => {
+const reducer = <T>(state: State<T>, action: Action<T>): State<T> => {
   switch (action.type) {
     case ACTION_TYPE.Request:
       return { ...initialState, status: STATUS.Loading };
@@ -59,14 +59,14 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const useFetch = (url: RequestInfo | URL, options: RequestInit) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const useFetch = <T>(url: RequestInfo | URL, options?: RequestInit) => {
+  const [state, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(reducer, initialState);
 
   useEffect(() => {
     dispatch(createRequestAction());
 
     let active = true;
-    const safeDispatch = (action: Action) => {
+    const safeDispatch = (action: Action<T>) => {
       if (active) {
         dispatch(action);
       }
