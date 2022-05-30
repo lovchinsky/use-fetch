@@ -2,9 +2,13 @@
   "name": "@lovchinsky/use-fetch",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "lint-fix": "eslint \"./src/api/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,22 @@
   "bugs": {
     "url": "https://github.com/lovchinsky/use-fetch/issues"
   },
-  "homepage": "https://github.com/lovchinsky/use-fetch#readme"
+  "homepage": "https://github.com/lovchinsky/use-fetch#readme",
+  "devDependencies": {
+    "@types/react": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "prettier": "2.6.2",
+    "react": "^16.8.0",
+    "typescript": "^4.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  }
 }
