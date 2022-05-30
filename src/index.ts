@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import { Reducer, useEffect, useReducer } from 'react';
 
 export enum STATUS {
   Idle = 'idle',
@@ -37,7 +37,7 @@ const createRequestAction = () => ({
 });
 
 const createSuccessAction = <T>(data: T) => ({
-  type: ACTION_TYPE.Request,
+  type: ACTION_TYPE.Success,
   payload: data,
 });
 
@@ -60,7 +60,7 @@ const reducer = <T>(state: State<T>, action: Action<T>): State<T> => {
 };
 
 const useFetch = <T>(url: RequestInfo | URL, options?: RequestInit) => {
-  const [state, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(reducer, initialState);
+  const [state, dispatch] = useReducer<Reducer<State<T>, Action<T>>>(reducer, initialState);
 
   useEffect(() => {
     dispatch(createRequestAction());
